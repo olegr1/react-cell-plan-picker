@@ -1,4 +1,7 @@
 import { useEffect, useReducer } from "react";
+import PlansPane from "./components/PlansPane";
+import PickerPane from "./components/PickerPane";
+import LoadingMessage from "./components/LoadingMessage";
 
 const ACTIONS = {
   DATA_REQUESTED: "dataRequested",
@@ -18,37 +21,63 @@ function reducer(state, action) {
       return state;
 
     case ACTIONS.DATA_RECEIVED:
-      return { ...state, plans: action.payload, status: STATUSES.READY };
+      return {
+        ...state,
+        plans: sortPlansBy(action.payload, "data"),
+        status: STATUSES.READY,
+      };
 
     case ACTIONS.NEXT_PLAN:
-      return { ...state, currentPlanId: getNextPrevPlanId(state, "next") };
+      return {
+        ...state,
+        currentPlanId: getNextPrevPlanId(
+          state.plans,
+          state.currentPlanId,
+          "next"
+        ),
+      };
 
     case ACTIONS.PREV_PLAN:
-      return { ...state, currentPlanId: getNextPrevPlanId(state, "prev") };
+      return {
+        ...state,
+        currentPlanId: getNextPrevPlanId(
+          state.plans,
+          state.currentPlanId,
+          "prev"
+        ),
+      };
 
     default:
       return state;
   }
 }
 
-function getNextPrevPlanId(state, direction) {
-  const currentPlanIndex = state.plans.findIndex(
-    (plan) => plan.id === state.currentPlanId
-  );
+function sortPlansBy(plans, sortBy) {
+  const stortedPlans = plans.sort((planA, planB) => {
+    const valueA = planA[sortBy];
+    const valueB = planB[sortBy];
+    return valueA - valueB;
+  });
+
+  return stortedPlans;
+}
+
+function getNextPrevPlanId(plans, currentPlanId, direction) {
+  const currentPlanIndex = plans.findIndex((plan) => plan.id === currentPlanId);
 
   let nextPlanId;
 
   if (direction === "next") {
-    if (currentPlanIndex < state.plans.length - 1) {
-      nextPlanId = state.plans[currentPlanIndex + 1].id;
+    if (currentPlanIndex < plans.length - 1) {
+      nextPlanId = plans[currentPlanIndex + 1].id;
     } else {
-      nextPlanId = state.currentPlanId;
+      nextPlanId = currentPlanId;
     }
   } else if (direction === "prev") {
     if (currentPlanIndex > 0) {
-      nextPlanId = state.plans[currentPlanIndex - 1].id;
+      nextPlanId = plans[currentPlanIndex - 1].id;
     } else {
-      nextPlanId = state.currentPlanId;
+      nextPlanId = currentPlanId;
     }
   }
 
@@ -56,7 +85,7 @@ function getNextPrevPlanId(state, direction) {
 }
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, {
+  const [{ plans, currentPlanId, status }, dispatch] = useReducer(reducer, {
     plans: [],
     currentPlanId: "123123",
     status: STATUSES.LOADING,
@@ -86,44 +115,28 @@ function App() {
   return (
     <>
       <main>
-        <h1>React Cellphone Plan Picker Demo</h1>
-
-        {state.status === STATUSES.LOADING && <div>Loading...</div>}
-
-        <div className="picker-pane">
-          <h2>Plan picker</h2>
-          <div className="picker">
-            {state.plans
-              .filter((plan) => plan.id === state.currentPlanId)
-              .map((currentPlan) => currentPlan.name)}
-          </div>
-          <button
-            type="button"
-            onClick={() => dispatch({ type: ACTIONS.PREV_PLAN })}
-          >
-            Previous
-          </button>
-          <button
-            type="button"
-            onClick={() => dispatch({ type: ACTIONS.NEXT_PLAN })}
-          >
-            Next
-          </button>
+        <div className="container">
+          <h1 className="page-title">React Cellphone Plan Picker Demo</h1>
         </div>
-        <div className="list-pane">
-          <h2>Cellphone Plans</h2>
-          <ul>
-            {state.plans.map((plan) => (
-              <li
-                style={
-                  plan.id === state.currentPlanId ? { color: "red" } : null
-                }
-                key={plan.id}
-              >
-                {plan.name}
-              </li>
-            ))}
-          </ul>
+
+        <div className="panes">
+          <div className="container">
+            <div className="panes-content">
+              {status === STATUSES.LOADING ? (
+                <LoadingMessage />
+              ) : (
+                <>
+                  <PickerPane
+                    plans={plans}
+                    currentPlanId={currentPlanId}
+                    dispatch={dispatch}
+                    ACTIONS={ACTIONS}
+                  />
+                  <PlansPane plans={plans} currentPlanId={currentPlanId} />
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </main>
     </>

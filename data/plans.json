@@ -1,25 +1,25 @@
 {
   "plans": [
     {
-      "id": "123456",
-      "name": "100 Minute Calling plan",
-      "price": "10",
-      "callMinutes": "100",
-      "data": "10000",
-      "specialOffer": {}
-    },
-
-    {
       "id": "321321",
       "name": "Special Unlimited Calling plan",
       "price": "35",
       "callMinutes": "",
       "data": "30000",
       "specialOffer": {
-        "description": "Sign up today and get {{data}} of data for {{duration}}",
+        "description": "Sign up today and get {{data}} of data for {{duration}} months",
         "data": "20000",
         "duration": "12"
       }
+    },
+
+    {
+      "id": "123456",
+      "name": "100 Minute Calling plan",
+      "price": "10",
+      "callMinutes": "100",
+      "data": "10000",
+      "specialOffer": ""
     },
 
     {
@@ -28,7 +28,7 @@
       "price": "15",
       "callMinutes": "200",
       "data": "15000",
-      "specialOffer": {}
+      "specialOffer": ""
     },
 
     {
@@ -47,7 +47,7 @@
       "name": "Extra Super Gold Unlimited plan",
       "price": "500",
       "callMinutes": "",
-      "data": "",
+      "data": "100000",
       "specialOffer": {
         "description": "Sign up today and we'll pay your rent"
       }
@@ -60,7 +60,7 @@
       "callMinutes": "",
       "data": "40000",
       "specialOffer": {
-        "description": "Sign up today and get {{data}}",
+        "description": "Sign up today and get {{data}} of data",
         "data": "30000"
       }
     }
