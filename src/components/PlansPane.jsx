@@ -1,8 +1,6 @@
 import PlanTile from "./PlanTile";
 
 function PlansPane({ plans, currentPlanId }) {
-  c;
-
   return (
     <div className="plans-pane">
       <h2 className="pane-title">Available Plans</h2>
