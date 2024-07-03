@@ -5,6 +5,14 @@ import LoadingMessage from "./components/LoadingMessage";
 import Layout from "./components/Layout";
 import { ACTIONS, STATUSES } from "./utils/constants";
 
+const initialState = {
+  plans: [],
+  currentPlanId: "123123",
+  status: STATUSES.LOADING,
+  isIncludedOfferData: true,
+  isModalOpen: false,
+};
+
 function reducer(state, action) {
   switch (action.type) {
     case ACTIONS.DATA_REQUESTED:
@@ -43,10 +51,17 @@ function reducer(state, action) {
         ),
       };
 
-    case ACTIONS.PLAN_ORDERED:
-      console.log("plan ordered");
+    case ACTIONS.MODAL_OPEN:
+      return {
+        ...state,
+        isModalOpen: true,
+      };
 
-      return state;
+    case ACTIONS.MODAL_CLOSE:
+      return {
+        ...state,
+        isModalOpen: false,
+      };
 
     default:
       return state;
@@ -86,13 +101,10 @@ function getNextPrevPlanId(plans, currentPlanId, direction) {
 }
 
 function App() {
-  const [{ plans, currentPlanId, status, isIncludedOfferData }, dispatch] =
-    useReducer(reducer, {
-      plans: [],
-      currentPlanId: "123123",
-      status: STATUSES.LOADING,
-      isIncludedOfferData: true,
-    });
+  const [
+    { plans, currentPlanId, status, isIncludedOfferData, isModalOpen },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -127,6 +139,7 @@ function App() {
               currentPlanId={currentPlanId}
               isIncludedOfferData={isIncludedOfferData}
               dispatch={dispatch}
+              isModalOpen={isModalOpen}
             />
             <PlansPane plans={plans} currentPlanId={currentPlanId} />
           </>

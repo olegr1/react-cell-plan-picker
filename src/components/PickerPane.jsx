@@ -3,8 +3,15 @@ import { formatSpecialOffer } from "../utils/utils.js";
 import CallMinuteOptions from "./CallMinuteOptions.jsx";
 import PickerFooter from "./PickerFooter.jsx";
 import DataBar from "./DataBar.jsx";
+import Modal from "./Modal.jsx";
 
-function PickerPane({ plans, currentPlanId, isIncludedOfferData, dispatch }) {
+function PickerPane({
+  plans,
+  currentPlanId,
+  isIncludedOfferData,
+  dispatch,
+  isModalOpen,
+}) {
   const currentPlan = plans.find((plan) => plan.id === currentPlanId);
 
   const specialOfferString = formatSpecialOffer(
@@ -41,8 +48,16 @@ function PickerPane({ plans, currentPlanId, isIncludedOfferData, dispatch }) {
           dispatch={dispatch}
         />
 
-        <PickerFooter currentPlan={currentPlan} dispatch={dispatch} />
+        <PickerFooter
+          currentPlan={currentPlan}
+          dispatch={dispatch}
+          isModalOpen={isModalOpen}
+        />
       </div>
+
+      <Modal title={"You order"} dispatch={dispatch} isModalOpen={isModalOpen}>
+        {currentPlan.name}
+      </Modal>
     </div>
   );
 }

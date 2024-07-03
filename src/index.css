@@ -103,6 +103,64 @@ svg {
   font-weight: bold;
 }
 
+.modal-open {
+  overflow: hidden;
+}
+
+.modal-dialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.modal-dialog::before {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  opacity: 0.4;
+}
+
+.modal-content {
+  transform: translate(-50%, -50%);
+  width: 600px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background-color: #fff;
+  box-shadow: 10px 11px 20px -12px rgba(0, 0, 0, 0.34);
+}
+
+.modal-header {
+  padding: 20px 30px 15px;
+  position: relative;
+}
+
+.modal-close-btn {
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  line-height: 0.5;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 15px 30px 30px;
+}
+
 @media (min-width: 640px) {
   .container {
     padding: 0 30px;

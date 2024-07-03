@@ -4,7 +4,8 @@ const ACTIONS = {
   NEXT_PLAN: "nextPlan",
   PREV_PLAN: "prevPlan",
   TOGGLE_OFFER_DATA: "toggleOfferData",
-  PLAN_ORDERED: "planOrdered",
+  MODAL_OPEN: "modalOpen",
+  MODAL_CLOSE: "modalClose",
 };
 
 const STATUSES = {
