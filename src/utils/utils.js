@@ -7,6 +7,8 @@ function convertMbToGbString(dataInMb) {
 }
 
 function formatSpecialOffer(description, data, duration) {
+  if (!description) return;
+
   const dataPattern = "{{data}}";
   const durationPattern = "{{duration}}";
 
@@ -15,13 +17,16 @@ function formatSpecialOffer(description, data, duration) {
   let formattedDescription = description;
 
   if (description.includes(dataPattern)) {
-    formattedDescription = description.replaceAll(dataPattern, dataInGb);
+    formattedDescription = description.replaceAll(
+      dataPattern,
+      `<span class="offer-highlight">${dataInGb}</span>`
+    );
   }
 
   if (formattedDescription.includes(durationPattern)) {
     formattedDescription = formattedDescription.replaceAll(
       durationPattern,
-      duration
+      `<span class="offer-highlight">${duration}</span>`
     );
   }
 

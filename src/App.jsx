@@ -2,19 +2,8 @@ import { useEffect, useReducer } from "react";
 import PlansPane from "./components/PlansPane";
 import PickerPane from "./components/PickerPane";
 import LoadingMessage from "./components/LoadingMessage";
-
-const ACTIONS = {
-  DATA_REQUESTED: "dataRequested",
-  DATA_RECEIVED: "dataReceived",
-  NEXT_PLAN: "nextPlan",
-  PREV_PLAN: "prevPlan",
-  TOGGLE_OFFER_DATA: "toggleOfferData",
-};
-
-const STATUSES = {
-  LOADING: "loading",
-  READY: "ready",
-};
+import Layout from "./components/Layout";
+import { ACTIONS, STATUSES } from "./utils/constants";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -53,6 +42,11 @@ function reducer(state, action) {
           "prev"
         ),
       };
+
+    case ACTIONS.PLAN_ORDERED:
+      console.log("plan ordered");
+
+      return state;
 
     default:
       return state;
@@ -123,32 +117,21 @@ function App() {
 
   return (
     <>
-      <main>
-        <div className="container">
-          <h1 className="page-title">React Cellphone Plan Picker Demo</h1>
-        </div>
-
-        <div className="panes">
-          <div className="container">
-            <div className="panes-content">
-              {status === STATUSES.LOADING ? (
-                <LoadingMessage />
-              ) : (
-                <>
-                  <PickerPane
-                    plans={plans}
-                    currentPlanId={currentPlanId}
-                    isIncludedOfferData={isIncludedOfferData}
-                    dispatch={dispatch}
-                    ACTIONS={ACTIONS}
-                  />
-                  <PlansPane plans={plans} currentPlanId={currentPlanId} />
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </main>
+      <Layout>
+        {status === STATUSES.LOADING ? (
+          <LoadingMessage />
+        ) : (
+          <>
+            <PickerPane
+              plans={plans}
+              currentPlanId={currentPlanId}
+              isIncludedOfferData={isIncludedOfferData}
+              dispatch={dispatch}
+            />
+            <PlansPane plans={plans} currentPlanId={currentPlanId} />
+          </>
+        )}
+      </Layout>
     </>
   );
 }

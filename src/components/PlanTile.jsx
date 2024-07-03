@@ -1,9 +1,16 @@
 import { convertMbToGbString, formatSpecialOffer } from "../utils/utils.js";
 
 function PlanTile({ plan, isCurrent }) {
+  const specialOfferString = formatSpecialOffer(
+    plan.specialOffer.description,
+    plan.specialOffer.data,
+    plan.specialOffer.duration
+  );
+
+  const specialOfferMarkup = { __html: specialOfferString };
+
   return (
     <li
-      className="plan-tile"
       className={`plan-tile ${isCurrent ? "plan-tile--current" : ""}`}
       key={plan.id}
     >
@@ -20,13 +27,10 @@ function PlanTile({ plan, isCurrent }) {
       <div className="plan-price">${plan.price}</div>
 
       {plan.specialOffer !== "" ? (
-        <div className="special-offer">
-          {formatSpecialOffer(
-            plan.specialOffer.description,
-            plan.specialOffer.data,
-            plan.specialOffer.duration
-          )}
-        </div>
+        <div
+          className="special-offer"
+          dangerouslySetInnerHTML={specialOfferMarkup}
+        ></div>
       ) : null}
     </li>
   );

@@ -19,6 +19,13 @@
   margin: 0;
 }
 
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 img,
 svg {
   display: block;
@@ -90,6 +97,10 @@ svg {
 .picker-offer-data-toggle[aria-pressed="true"] {
   background-color: #000;
   color: #fff;
+}
+
+.offer-highlight {
+  font-weight: bold;
 }
 
 @media (min-width: 640px) {
