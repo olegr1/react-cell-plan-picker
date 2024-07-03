@@ -8,6 +8,7 @@ const ACTIONS = {
   DATA_RECEIVED: "dataReceived",
   NEXT_PLAN: "nextPlan",
   PREV_PLAN: "prevPlan",
+  TOGGLE_OFFER_DATA: "toggleOfferData",
 };
 
 const STATUSES = {
@@ -25,6 +26,12 @@ function reducer(state, action) {
         ...state,
         plans: sortPlansBy(action.payload, "data"),
         status: STATUSES.READY,
+      };
+
+    case ACTIONS.TOGGLE_OFFER_DATA:
+      return {
+        ...state,
+        isIncludedOfferData: !state.isIncludedOfferData,
       };
 
     case ACTIONS.NEXT_PLAN:
@@ -85,11 +92,13 @@ function getNextPrevPlanId(plans, currentPlanId, direction) {
 }
 
 function App() {
-  const [{ plans, currentPlanId, status }, dispatch] = useReducer(reducer, {
-    plans: [],
-    currentPlanId: "123123",
-    status: STATUSES.LOADING,
-  });
+  const [{ plans, currentPlanId, status, isIncludedOfferData }, dispatch] =
+    useReducer(reducer, {
+      plans: [],
+      currentPlanId: "123123",
+      status: STATUSES.LOADING,
+      isIncludedOfferData: true,
+    });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -129,6 +138,7 @@ function App() {
                   <PickerPane
                     plans={plans}
                     currentPlanId={currentPlanId}
+                    isIncludedOfferData={isIncludedOfferData}
                     dispatch={dispatch}
                     ACTIONS={ACTIONS}
                   />
