@@ -2,7 +2,7 @@ import { formatSpecialOffer } from "../utils/utils.js";
 
 import CallMinuteOptions from "./CallMinuteOptions.jsx";
 import PickerFooter from "./PickerFooter.jsx";
-import DataSection from "./DataSection.jsx";
+import PickerDataSection from "./PickerDataSection.jsx";
 import Modal from "./Modal.jsx";
 
 function PickerPane({
@@ -33,7 +33,7 @@ function PickerPane({
           ></div>
         )}
 
-        <DataSection
+        <PickerDataSection
           plans={plans}
           currentPlan={currentPlan}
           isIncludedOfferData={isIncludedOfferData}

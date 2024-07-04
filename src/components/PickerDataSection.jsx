@@ -1,7 +1,12 @@
 import { ACTIONS } from "../utils/constants.js";
 import { convertMbToGbString } from "../utils/utils.js";
 
-function DataSection({ plans, currentPlan, isIncludedOfferData, dispatch }) {
+function PickerDataSection({
+  plans,
+  currentPlan,
+  isIncludedOfferData,
+  dispatch,
+}) {
   const isLastPlan = plans.indexOf(currentPlan) === plans.length - 1;
   const isFirstPlan = plans.indexOf(currentPlan) === 0;
 
@@ -44,7 +49,7 @@ function DataSection({ plans, currentPlan, isIncludedOfferData, dispatch }) {
   }
 
   return (
-    <>
+    <div className="picker-section">
       <h3 className="picker-section-title">Total data</h3>
 
       <div className="picker-data-bar-wrap">
@@ -114,8 +119,8 @@ function DataSection({ plans, currentPlan, isIncludedOfferData, dispatch }) {
           </span>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
-export default DataSection;
+export default PickerDataSection;

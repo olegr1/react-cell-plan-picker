@@ -41,7 +41,7 @@ function CallMinuteOptions({ plans, currentPlan, dispatch }) {
   }
 
   return (
-    <>
+    <div className="picker-section">
       <h3 className="picker-section-title">Calling</h3>
       <ul className="picker-calling-options">
         {getAvailableCallMinuteOptions().map((option) => (
@@ -79,7 +79,7 @@ function CallMinuteOptions({ plans, currentPlan, dispatch }) {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 
