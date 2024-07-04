@@ -1,24 +1,82 @@
+import { ACTIONS } from "../utils/constants";
+
 function CallMinuteOptions({ plans, currentPlan, dispatch }) {
   function getAvailableCallMinuteOptions() {
-    let options = [];
-
-    plans.forEach((plan) => {
-      if (!options.includes(plan.callMinutes)) {
-        options.push(plan.callMinutes);
+    const options = plans.map((plan) => {
+      if (plan.callMinutes === "") {
+        return Infinity;
       }
+
+      return plan.callMinutes;
     });
 
-    return options;
+    const uniqueOptions = [...new Set(options)];
+    const sortedUniqueOptions = uniqueOptions.sort((a, b) => a - b);
+
+    return sortedUniqueOptions;
   }
 
-  const availableCallMinuteOptions = getAvailableCallMinuteOptions();
+  function getNearestPlanWithCallingOption(option) {
+    console.log(option);
+
+    const currentPlanNumeric =
+      currentPlan.callMinutes === ""
+        ? Infinity
+        : Number(currentPlan.callMinutes);
+
+    const isLesserPlan = currentPlanNumeric > option;
+
+    const optionOriginal = option === Infinity ? "" : option;
+    const matchingPlans = plans.filter(
+      (plan) => plan.callMinutes === optionOriginal
+    );
+
+    let plan = isLesserPlan
+      ? matchingPlans[matchingPlans.length - 1]
+      : matchingPlans[0];
+
+    console.log(isLesserPlan, plan);
+
+    return plan.id;
+  }
 
   return (
     <>
-      <h3>Calling minutes</h3>
-      <ul>
-        {availableCallMinuteOptions.map((option) => (
-          <li key={option}>{option === "" ? <div>Unlimited</div> : option}</li>
+      <h3 className="picker-section-title">Calling</h3>
+      <ul className="picker-calling-options">
+        {getAvailableCallMinuteOptions().map((option) => (
+          <li key={option}>
+            <button
+              type="button"
+              onClick={() =>
+                dispatch({
+                  type: ACTIONS.SELECT_CALLING_MINUTES,
+                  payload: getNearestPlanWithCallingOption(option),
+                })
+              }
+              disabled={
+                currentPlan.callMinutes === option ||
+                (currentPlan.callMinutes === "" && option === Infinity)
+                  ? true
+                  : null
+              }
+              className={
+                currentPlan.callMinutes === option ||
+                (currentPlan.callMinutes === "" && option === Infinity)
+                  ? "active"
+                  : null
+              }
+            >
+              {option === Infinity ? (
+                <div>Unlimited</div>
+              ) : (
+                <>
+                  <div className="picker-calling-option-number">{option}</div>
+                  <div className="picker-calling-option-value">minutes</div>
+                </>
+              )}
+            </button>
+          </li>
         ))}
       </ul>
     </>

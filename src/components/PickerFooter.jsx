@@ -1,12 +1,12 @@
 import { ACTIONS } from "../utils/constants.js";
 
-function PickerFooter({ currentPlan, dispatch, isModalOpen }) {
+function PickerFooter({ currentPlan, dispatch }) {
   return (
     <div className="picker-footer">
       <div className="picker-footer-price">${currentPlan.price}/month</div>
       <button
         type="button"
-        onClick={() => dispatch({ type: ACTIONS.MODAL_OPEN })}
+        onClick={() => dispatch({ type: ACTIONS.PLAN_ORDER })}
       >
         Order now
       </button>

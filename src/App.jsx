@@ -10,7 +10,7 @@ const initialState = {
   currentPlanId: "123123",
   status: STATUSES.LOADING,
   isIncludedOfferData: true,
-  isModalOpen: false,
+  isOrderModalOpen: false,
 };
 
 function reducer(state, action) {
@@ -51,16 +51,25 @@ function reducer(state, action) {
         ),
       };
 
-    case ACTIONS.MODAL_OPEN:
+    case ACTIONS.PLAN_ORDER:
       return {
         ...state,
-        isModalOpen: true,
+        isOrderModalOpen: true,
       };
 
     case ACTIONS.MODAL_CLOSE:
       return {
         ...state,
-        isModalOpen: false,
+        isOrderModalOpen: false,
+        isCallingModalOpen: false,
+      };
+
+    case ACTIONS.SELECT_CALLING_MINUTES:
+      console.log(action.payload);
+
+      return {
+        ...state,
+        currentPlanId: action.payload,
       };
 
     default:
@@ -102,7 +111,7 @@ function getNextPrevPlanId(plans, currentPlanId, direction) {
 
 function App() {
   const [
-    { plans, currentPlanId, status, isIncludedOfferData, isModalOpen },
+    { plans, currentPlanId, status, isIncludedOfferData, isOrderModalOpen },
     dispatch,
   ] = useReducer(reducer, initialState);
 
@@ -139,7 +148,7 @@ function App() {
               currentPlanId={currentPlanId}
               isIncludedOfferData={isIncludedOfferData}
               dispatch={dispatch}
-              isModalOpen={isModalOpen}
+              isOrderModalOpen={isOrderModalOpen}
             />
             <PlansPane plans={plans} currentPlanId={currentPlanId} />
           </>

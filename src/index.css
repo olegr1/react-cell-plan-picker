@@ -132,7 +132,7 @@ svg {
 
 .modal-content {
   transform: translate(-50%, -50%);
-  width: 600px;
+  width: calc(100% - 30px);
   position: absolute;
   left: 50%;
   top: 50%;
@@ -161,6 +161,30 @@ svg {
   padding: 15px 30px 30px;
 }
 
+.picker-calling-options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.picker-calling-options button {
+  background-color: transparent;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+.picker-calling-options button.active {
+  font-weight: bold;
+}
+
+.picker-calling-options button:disabled {
+  cursor: default;
+}
+
+.picker-calling-option-number {
+  font-size: 18px;
+}
+
 @media (min-width: 640px) {
   .container {
     padding: 0 30px;
@@ -181,11 +205,27 @@ svg {
   .plan-tile {
     width: calc(50% - 15px);
   }
+
+  .modal-content {
+    width: 600px;
+  }
 }
 
 @media (min-width: 992px) {
   .container {
     max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .plan-tile {
+    width: calc(33.3333% - 15px);
+  }
+}
+
+@media (min-width: 1240px) {
+  .container {
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -199,17 +239,5 @@ svg {
   }
   .plans-pane {
     width: 60%;
-  }
-
-  .plan-tile {
-    width: calc(33.3333% - 15px);
-  }
-}
-
-@media (min-width: 1240px) {
-  .container {
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
   }
 }

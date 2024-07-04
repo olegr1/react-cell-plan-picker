@@ -38,7 +38,7 @@
       "callMinutes": "",
       "data": "20000",
       "specialOffer": {
-        "description": "Sign up today and get a free coffe + dougnut"
+        "description": "Sign up today and get a free coffe + doughnut"
       }
     },
 
@@ -46,7 +46,7 @@
       "id": "333333",
       "name": "Very Basic plan",
       "price": "5",
-      "callMinutes": "",
+      "callMinutes": "100",
       "data": "2000",
       "specialOffer": ""
     },

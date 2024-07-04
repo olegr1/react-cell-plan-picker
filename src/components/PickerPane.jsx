@@ -10,7 +10,7 @@ function PickerPane({
   currentPlanId,
   isIncludedOfferData,
   dispatch,
-  isModalOpen,
+  isOrderModalOpen,
 }) {
   const currentPlan = plans.find((plan) => plan.id === currentPlanId);
 
@@ -26,8 +26,6 @@ function PickerPane({
     <div className="picker-pane">
       <h2 className="pane-title">Plan picker</h2>
       <div className="picker">
-        <h3 className="picker-plan-title">{currentPlan.name}</h3>
-
         {currentPlan.specialOffer !== "" && (
           <div
             className="picker-offer"
@@ -48,14 +46,14 @@ function PickerPane({
           dispatch={dispatch}
         />
 
-        <PickerFooter
-          currentPlan={currentPlan}
-          dispatch={dispatch}
-          isModalOpen={isModalOpen}
-        />
+        <PickerFooter currentPlan={currentPlan} dispatch={dispatch} />
       </div>
 
-      <Modal title={"You order"} dispatch={dispatch} isModalOpen={isModalOpen}>
+      <Modal
+        title={"Your order"}
+        dispatch={dispatch}
+        isModalOpen={isOrderModalOpen}
+      >
         {currentPlan.name}
       </Modal>
     </div>

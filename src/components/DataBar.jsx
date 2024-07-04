@@ -45,6 +45,7 @@ function DataBar({ plans, currentPlan, isIncludedOfferData, dispatch }) {
 
   return (
     <>
+      <h3 className="picker-section-title">Data</h3>
       <div className="picker-data-bar">
         <div
           className="picker-data-bar-total"
