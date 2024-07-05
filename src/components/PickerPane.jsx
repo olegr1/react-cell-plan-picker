@@ -1,6 +1,6 @@
 import { formatSpecialOffer } from "../utils/utils.js";
 
-import CallMinuteOptions from "./CallMinuteOptions.jsx";
+import PickerCallingSection from "./PickerCallingSection.jsx";
 import PickerFooter from "./PickerFooter.jsx";
 import PickerDataSection from "./PickerDataSection.jsx";
 import Modal from "./Modal.jsx";
@@ -40,7 +40,7 @@ function PickerPane({
           dispatch={dispatch}
         />
 
-        <CallMinuteOptions
+        <PickerCallingSection
           plans={plans}
           currentPlan={currentPlan}
           dispatch={dispatch}

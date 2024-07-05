@@ -1,6 +1,6 @@
 import { ACTIONS } from "../utils/constants";
 
-function CallMinuteOptions({ plans, currentPlan, dispatch }) {
+function PickerCallingSection({ plans, currentPlan, dispatch }) {
   function getAvailableCallMinuteOptions() {
     const options = plans.map((plan) => {
       if (plan.callMinutes === "") {
@@ -68,11 +68,11 @@ function CallMinuteOptions({ plans, currentPlan, dispatch }) {
               }
             >
               {option === Infinity ? (
-                <div>Unlimited</div>
+                <div className="picker-calling-option-number">Unlimited</div>
               ) : (
                 <>
                   <div className="picker-calling-option-number">{option}</div>
-                  <div className="picker-calling-option-value">minutes</div>
+                  <div className="picker-calling-option-unit">minutes</div>
                 </>
               )}
             </button>
@@ -83,4 +83,4 @@ function CallMinuteOptions({ plans, currentPlan, dispatch }) {
   );
 }
 
-export default CallMinuteOptions;
+export default PickerCallingSection;

@@ -104,6 +104,7 @@ function PickerDataSection({
       {currentPlan.specialOffer?.data && (
         <div className="picker-data-item">
           <span className="picker-data-item-desc">
+            Offer data
             <button
               className="picker-offer-data-toggle"
               type="button"
@@ -112,7 +113,6 @@ function PickerDataSection({
             >
               {isIncludedOfferData ? "Exclude" : "Include"}
             </button>
-            offer data
           </span>
           <span className="picker-data-item-gb">
             {convertMbToGbString(currentPlan.specialOffer.data)}

@@ -10,8 +10,9 @@
   -moz-osx-font-smoothing: grayscale;
 
   --main-solid-color: #3d405b;
+  --main-solid-color-light: #e0e0e0;
   --accent-color-one: #e07a5f;
-  --accent-color-two: #81b29a;
+  --accent-color-two: #5f997d;
   --accent-color-three: #f2cc8f;
   --bg-color: #f4f1de;
   --bg-color-light: #f6f5ee;
@@ -190,6 +191,19 @@ svg {
   position: absolute;
   top: 0;
   right: 0;
+
+  transition: background-color 0.2s ease;
+}
+
+.picker-data-btn-more:hover,
+.picker-data-btn-less:hover {
+  background-color: var(--main-solid-color-light);
+}
+
+.picker-data-btn-less:hover:before,
+.picker-data-btn-more:hover:before,
+.picker-data-btn-more:hover:after {
+  background-color: var(--main-solid-color);
 }
 
 .picker-data-btn-less {
@@ -261,6 +275,7 @@ svg {
   font-size: 12px;
   color: var(--main-solid-color);
   margin-right: 4px;
+  margin-left: 10px;
 }
 
 /* .picker-offer-data-toggle[aria-pressed="true"] {
@@ -331,6 +346,14 @@ svg {
 .picker-calling-options {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  margin: 30px auto 0;
+  position: relative;
+}
+
+.picker-calling-options li {
+  flex: 1 1 0;
+  text-align: center;
 }
 
 .picker-calling-options button {
@@ -338,23 +361,87 @@ svg {
   text-align: center;
   border: none;
   cursor: pointer;
+  position: relative;
+  color: var(--main-solid-color);
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.picker-calling-options button:hover .picker-calling-option-number,
+.picker-calling-options button:focus .picker-calling-option-number {
+  text-decoration: underline;
 }
 
 .picker-calling-options button.active {
   font-weight: bold;
+  color: var(--main-solid-color);
 }
 
 .picker-calling-options button:disabled {
   cursor: default;
 }
 
+.picker-calling-options button:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15px;
+  height: 15px;
+  border-radius: var(--border-radius);
+  background-color: var(--main-solid-color-light);
+}
+
+.picker-calling-options button.active:after {
+  display: block;
+  position: absolute;
+  top: -5px;
+  left: calc(50% - 3px);
+  content: " ";
+  transform: rotate(45deg);
+  height: 8px;
+  width: 6px;
+  border-bottom: 2px solid #fff;
+  border-right: 2px solid #fff;
+  z-index: 3;
+}
+
+.picker-calling-options button.active:before {
+  background-color: var(--accent-color-two);
+}
+
+.picker-calling-options:before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--main-solid-color-light);
+  background: linear-gradient(
+    105deg,
+    rgba(212, 212, 212, 0) 0%,
+    rgba(212, 212, 212, 1) 15%,
+    rgba(212, 212, 212, 1) 85%,
+    rgba(212, 212, 2125, 0) 100%
+  );
+  position: absolute;
+}
+
 .picker-calling-option-number {
   font-size: 18px;
+  font-family: "Titillium";
+  font-weight: bold;
+}
+
+.picker-calling-option-unit {
+  font-size: 14px;
+  font-family: "Titillium";
+  font-weight: normal;
 }
 
 .picker-footer {
   padding: 15px 15px 30px;
-  border-top: 1px solid var(--border-color-dark);
 }
 
 .picker-footer-price {
@@ -379,6 +466,13 @@ svg {
   width: calc(100% - 60px);
   display: block;
   margin: 0 auto;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.picker-order-cta:hover {
+  background-color: var(--main-solid-color-light);
+  color: var(--main-solid-color);
 }
 
 @media (min-width: 640px) {
