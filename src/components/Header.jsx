@@ -1,6 +1,6 @@
 function Header() {
   return (
-    <header>
+    <header className="page-header">
       <div className="container">
         <h1 className="page-title">React Cellphone Plan Picker Demo</h1>
       </div>

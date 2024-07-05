@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { ACTIONS } from "../utils/constants.js";
 import { convertMbToGbString } from "../utils/utils.js";
 
@@ -9,6 +10,8 @@ function PickerDataSection({
 }) {
   const isLastPlan = plans.indexOf(currentPlan) === plans.length - 1;
   const isFirstPlan = plans.indexOf(currentPlan) === 0;
+
+  const hasSpecialOfferWithData = currentPlan.specialOffer.data !== undefined;
 
   function getDataBarWidth() {
     const maxData = Math.max(...plans.map((plan) => getPlanTotalData(plan)));
@@ -94,31 +97,37 @@ function PickerDataSection({
         </div>
       </div>
 
-      <div className="picker-data-item">
+      <div className="picker-data-item active">
         <span className="picker-data-item-desc">Data included in the plan</span>
         <span className="picker-data-item-gb">
           {convertMbToGbString(currentPlan.data)}
         </span>
       </div>
 
-      {currentPlan.specialOffer?.data && (
-        <div className="picker-data-item">
-          <span className="picker-data-item-desc">
-            Offer data
-            <button
-              className="picker-offer-data-toggle"
-              type="button"
-              aria-pressed={isIncludedOfferData}
-              onClick={() => dispatch({ type: ACTIONS.TOGGLE_OFFER_DATA })}
-            >
-              {isIncludedOfferData ? "Exclude" : "Include"}
-            </button>
-          </span>
-          <span className="picker-data-item-gb">
-            {convertMbToGbString(currentPlan.specialOffer.data)}
-          </span>
-        </div>
-      )}
+      <div
+        className={
+          hasSpecialOfferWithData
+            ? "picker-data-item active"
+            : "picker-data-item"
+        }
+        aria-hidden={hasSpecialOfferWithData ? null : true}
+      >
+        <span className="picker-data-item-desc">
+          Offer data
+          <button
+            className="picker-offer-data-toggle"
+            type="button"
+            aria-pressed={isIncludedOfferData}
+            onClick={() => dispatch({ type: ACTIONS.TOGGLE_OFFER_DATA })}
+          >
+            {isIncludedOfferData ? "Exclude" : "Include"}
+          </button>
+        </span>
+        <span className="picker-data-item-gb">
+          {hasSpecialOfferWithData &&
+            convertMbToGbString(currentPlan.specialOffer.data)}
+        </span>
+      </div>
     </div>
   );
 }

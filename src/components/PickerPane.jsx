@@ -13,6 +13,7 @@ function PickerPane({
   isOrderModalOpen,
 }) {
   const currentPlan = plans.find((plan) => plan.id === currentPlanId);
+  const hasOffer = currentPlan.specialOffer !== "";
 
   const specialOfferString = formatSpecialOffer(
     currentPlan.specialOffer.description,
@@ -26,13 +27,9 @@ function PickerPane({
     <div className="picker-pane">
       <h2 className="pane-title">Plan picker</h2>
       <div className="picker">
-        {currentPlan.specialOffer !== "" && (
-          <div
-            className="picker-offer"
-            dangerouslySetInnerHTML={specialOfferMarkup}
-          ></div>
-        )}
-
+        <div className={hasOffer ? "picker-offer active" : "picker-offer"}>
+          {hasOffer && <div dangerouslySetInnerHTML={specialOfferMarkup}></div>}
+        </div>
         <PickerDataSection
           plans={plans}
           currentPlan={currentPlan}
