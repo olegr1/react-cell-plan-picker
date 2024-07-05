@@ -14,21 +14,36 @@ function PlanTile({ plan, isCurrent }) {
       className={`plan-tile ${isCurrent ? "plan-tile--current" : ""}`}
       key={plan.id}
     >
-      <h3>{plan.name}</h3>
-      <div className="plan-data">
-        {plan.data === ""
-          ? "Unlimited data"
-          : `${convertMbToGbString(plan.data)} of data`}
-      </div>
-      <div className="plan-price">
-        {plan.callMinutes === "" ? "Unlimited" : plan.callMinutes} call minutes
-      </div>
+      <h3 className="plan-tile-title">{plan.name}</h3>
 
-      <div className="plan-price">${plan.price}</div>
+      <ul className="plan-features">
+        <li>
+          {plan.data === "" ? (
+            <span className="plan-feature-highlight">Unlimited data</span>
+          ) : (
+            <>
+              <span className="plan-feature-highlight">
+                {convertMbToGbString(plan.data)}
+              </span>{" "}
+              of data
+            </>
+          )}
+        </li>
+        <li>
+          {plan.callMinutes === "" ? (
+            <span className="plan-feature-highlight">Unlimited </span>
+          ) : (
+            <span className="plan-feature-highlight">{plan.callMinutes} </span>
+          )}
+          call minutes
+        </li>
+      </ul>
+
+      <div className="plan-price">${plan.price}/month</div>
 
       {plan.specialOffer !== "" ? (
         <div
-          className="special-offer"
+          className="plan-offer"
           dangerouslySetInnerHTML={specialOfferMarkup}
         ></div>
       ) : null}
