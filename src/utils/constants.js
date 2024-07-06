@@ -14,4 +14,12 @@ const STATUSES = {
   READY: "ready",
 };
 
-export { ACTIONS, STATUSES };
+const STATE_CHANGE_TRIGGERS = {
+  MORE_LESS_BUTTONS: "moreLessButtons",
+  CALLING_BUTTONS: "callingButtons",
+  OFFER_DATA_TOGGLE: "offerDataToggle",
+  MODAL_OPEN_CLOSE: "modalOpenClose",
+  OTHER: "other",
+};
+
+export { ACTIONS, STATUSES, STATE_CHANGE_TRIGGERS };

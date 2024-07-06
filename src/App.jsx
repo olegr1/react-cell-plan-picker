@@ -3,7 +3,7 @@ import PlansPane from "./components/PlansPane";
 import PickerPane from "./components/PickerPane";
 import LoadingMessage from "./components/LoadingMessage";
 import Layout from "./components/Layout";
-import { ACTIONS, STATUSES } from "./utils/constants";
+import { ACTIONS, STATUSES, STATE_CHANGE_TRIGGERS } from "./utils/constants";
 
 const initialState = {
   plans: [],
@@ -11,6 +11,7 @@ const initialState = {
   status: STATUSES.LOADING,
   isIncludedOfferData: true,
   isOrderModalOpen: false,
+  stateChangedBy: STATE_CHANGE_TRIGGERS.OTHER,
 };
 
 function reducer(state, action) {
@@ -23,17 +24,20 @@ function reducer(state, action) {
         ...state,
         plans: sortPlansBy(action.payload, "data"),
         status: STATUSES.READY,
+        stateChangedBy: STATE_CHANGE_TRIGGERS.OTHER,
       };
 
     case ACTIONS.TOGGLE_OFFER_DATA:
       return {
         ...state,
         isIncludedOfferData: !state.isIncludedOfferData,
+        stateChangedBy: STATE_CHANGE_TRIGGERS.OFFER_DATA_TOGGLE,
       };
 
     case ACTIONS.NEXT_PLAN:
       return {
         ...state,
+        stateChangedBy: STATE_CHANGE_TRIGGERS.MORE_LESS_BUTTONS,
         currentPlanId: getNextPrevPlanId(
           state.plans,
           state.currentPlanId,
@@ -44,6 +48,7 @@ function reducer(state, action) {
     case ACTIONS.PREV_PLAN:
       return {
         ...state,
+        stateChangedBy: STATE_CHANGE_TRIGGERS.MORE_LESS_BUTTONS,
         currentPlanId: getNextPrevPlanId(
           state.plans,
           state.currentPlanId,
@@ -54,6 +59,7 @@ function reducer(state, action) {
     case ACTIONS.PLAN_ORDER:
       return {
         ...state,
+        stateChangedBy: STATE_CHANGE_TRIGGERS.MODAL_OPEN_CLOSE,
         isOrderModalOpen: true,
       };
 
@@ -62,6 +68,7 @@ function reducer(state, action) {
         ...state,
         isOrderModalOpen: false,
         isCallingModalOpen: false,
+        stateChangedBy: STATE_CHANGE_TRIGGERS.MODAL_OPEN_CLOSE,
       };
 
     case ACTIONS.SELECT_CALLING_MINUTES:
@@ -69,6 +76,7 @@ function reducer(state, action) {
 
       return {
         ...state,
+        stateChangedBy: STATE_CHANGE_TRIGGERS.CALLING_BUTTONS,
         currentPlanId: action.payload,
       };
 
@@ -111,7 +119,14 @@ function getNextPrevPlanId(plans, currentPlanId, direction) {
 
 function App() {
   const [
-    { plans, currentPlanId, status, isIncludedOfferData, isOrderModalOpen },
+    {
+      plans,
+      currentPlanId,
+      status,
+      isIncludedOfferData,
+      isOrderModalOpen,
+      stateChangedBy,
+    },
     dispatch,
   ] = useReducer(reducer, initialState);
 
@@ -136,6 +151,20 @@ function App() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "Escape") {
+        dispatch({ type: ACTIONS.MODAL_CLOSE });
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+
   return (
     <>
       <Layout>
@@ -149,6 +178,7 @@ function App() {
               isIncludedOfferData={isIncludedOfferData}
               dispatch={dispatch}
               isOrderModalOpen={isOrderModalOpen}
+              stateChangedBy={stateChangedBy}
             />
             <PlansPane plans={plans} currentPlanId={currentPlanId} />
           </>

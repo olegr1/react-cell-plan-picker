@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { ACTIONS } from "../utils/constants.js";
+import { useEffect, useRef } from "react";
+import { ACTIONS, STATE_CHANGE_TRIGGERS } from "../utils/constants.js";
 import { convertMbToGbString } from "../utils/utils.js";
 
 function PickerDataSection({
@@ -7,11 +7,31 @@ function PickerDataSection({
   currentPlan,
   isIncludedOfferData,
   dispatch,
+  stateChangedBy,
 }) {
   const isLastPlan = plans.indexOf(currentPlan) === plans.length - 1;
   const isFirstPlan = plans.indexOf(currentPlan) === 0;
 
   const hasSpecialOfferWithData = currentPlan.specialOffer.data !== undefined;
+
+  const lessBtnRef = useRef(null);
+  const moreBtnRef = useRef(null);
+
+  useEffect(() => {
+    if (
+      stateChangedBy === STATE_CHANGE_TRIGGERS.MORE_LESS_BUTTONS &&
+      lessBtnRef.current.disabled
+    ) {
+      moreBtnRef.current.focus();
+    }
+
+    if (
+      stateChangedBy === STATE_CHANGE_TRIGGERS.MORE_LESS_BUTTONS &&
+      moreBtnRef.current.disabled
+    ) {
+      lessBtnRef.current.focus();
+    }
+  }, [currentPlan, stateChangedBy]);
 
   function getDataBarWidth() {
     const maxData = Math.max(...plans.map((plan) => getPlanTotalData(plan)));
@@ -71,6 +91,7 @@ function PickerDataSection({
           className="picker-data-btn-less"
           type="button"
           disabled={isFirstPlan}
+          ref={lessBtnRef}
           onClick={() => dispatch({ type: ACTIONS.PREV_PLAN })}
         >
           <span className="sr-only">Less data</span>
@@ -79,6 +100,7 @@ function PickerDataSection({
           className="picker-data-btn-more"
           type="button"
           disabled={isLastPlan}
+          ref={moreBtnRef}
           onClick={() => dispatch({ type: ACTIONS.NEXT_PLAN })}
         >
           <span className="sr-only">More data</span>
@@ -114,14 +136,21 @@ function PickerDataSection({
       >
         <span className="picker-data-item-desc">
           Offer data
-          <button
-            className="picker-offer-data-toggle"
-            type="button"
-            aria-pressed={isIncludedOfferData}
-            onClick={() => dispatch({ type: ACTIONS.TOGGLE_OFFER_DATA })}
-          >
-            {isIncludedOfferData ? "Exclude" : "Include"}
-          </button>
+          {hasSpecialOfferWithData && (
+            <button
+              className="picker-offer-data-toggle"
+              type="button"
+              aria-pressed={isIncludedOfferData}
+              aria-label={
+                isIncludedOfferData
+                  ? "Exclude offer data"
+                  : "Include  offer data"
+              }
+              onClick={() => dispatch({ type: ACTIONS.TOGGLE_OFFER_DATA })}
+            >
+              {isIncludedOfferData ? "Exclude" : "Include"}
+            </button>
+          )}
         </span>
         <span className="picker-data-item-gb">
           {hasSpecialOfferWithData &&

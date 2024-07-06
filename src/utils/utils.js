@@ -1,12 +1,14 @@
 export { convertMbToGbString, formatSpecialOffer };
 
-function convertMbToGbString(dataInMb) {
-  const dataInGb = dataInMb / 1000 + "GB";
+function convertMbToGbString(dataInMb, accessible = false) {
+  const unitName = accessible ? " Gigabytes" : "GB";
+
+  const dataInGb = dataInMb / 1000 + unitName;
 
   return dataInGb;
 }
 
-function formatSpecialOffer(description, data, duration) {
+function formatSpecialOffer(description, data, duration, accessible = false) {
   if (!description) return;
 
   const dataPattern = "{{data}}";
@@ -19,16 +21,20 @@ function formatSpecialOffer(description, data, duration) {
   if (description.includes(dataPattern)) {
     formattedDescription = description.replaceAll(
       dataPattern,
-      `<span class="offer-highlight">${dataInGb}</span>`
+      wrapInHighlight(dataInGb, accessible)
     );
   }
 
   if (formattedDescription.includes(durationPattern)) {
     formattedDescription = formattedDescription.replaceAll(
       durationPattern,
-      `<span class="offer-highlight">${duration}</span>`
+      wrapInHighlight(duration, accessible)
     );
   }
 
   return formattedDescription;
+}
+
+function wrapInHighlight(text, accessible) {
+  return accessible ? text : `<span class="offer-highlight">${text}</span>`;
 }

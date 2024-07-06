@@ -1,6 +1,22 @@
-import { ACTIONS } from "../utils/constants";
+import { ACTIONS, STATE_CHANGE_TRIGGERS } from "../utils/constants";
+import { useEffect, useRef } from "react";
 
-function PickerCallingSection({ plans, currentPlan, dispatch }) {
+function PickerCallingSection({
+  plans,
+  currentPlan,
+  dispatch,
+  stateChangedBy,
+}) {
+  const activeCallingOption = useRef(null);
+
+  useEffect(() => {
+    if (stateChangedBy === STATE_CHANGE_TRIGGERS.CALLING_BUTTONS) {
+      console.log("AAA", activeCallingOption.current);
+
+      activeCallingOption.current.focus();
+    }
+  }, [currentPlan, stateChangedBy]);
+
   function getAvailableCallMinuteOptions() {
     const options = plans.map((plan) => {
       if (plan.callMinutes === "") {
@@ -44,40 +60,36 @@ function PickerCallingSection({ plans, currentPlan, dispatch }) {
     <div className="picker-section">
       <h3 className="picker-section-title">Calling</h3>
       <ul className="picker-calling-options">
-        {getAvailableCallMinuteOptions().map((option) => (
-          <li key={option}>
-            <button
-              type="button"
-              onClick={() =>
-                dispatch({
-                  type: ACTIONS.SELECT_CALLING_MINUTES,
-                  payload: getNearestPlanWithCallingOption(option),
-                })
-              }
-              disabled={
-                currentPlan.callMinutes === option ||
-                (currentPlan.callMinutes === "" && option === Infinity)
-                  ? true
-                  : null
-              }
-              className={
-                currentPlan.callMinutes === option ||
-                (currentPlan.callMinutes === "" && option === Infinity)
-                  ? "active"
-                  : null
-              }
-            >
-              {option === Infinity ? (
-                <div className="picker-calling-option-number">Unlimited</div>
-              ) : (
-                <>
-                  <div className="picker-calling-option-number">{option}</div>
-                  <div className="picker-calling-option-unit">minutes</div>
-                </>
-              )}
-            </button>
-          </li>
-        ))}
+        {getAvailableCallMinuteOptions().map((option) => {
+          const isCurrentOption =
+            currentPlan.callMinutes === option ||
+            (currentPlan.callMinutes === "" && option === Infinity);
+
+          return (
+            <li key={option}>
+              <button
+                type="button"
+                ref={isCurrentOption ? activeCallingOption : null}
+                onClick={() =>
+                  dispatch({
+                    type: ACTIONS.SELECT_CALLING_MINUTES,
+                    payload: getNearestPlanWithCallingOption(option),
+                  })
+                }
+                className={isCurrentOption ? "active" : null}
+              >
+                {option === Infinity ? (
+                  <div className="picker-calling-option-number">Unlimited</div>
+                ) : (
+                  <>
+                    <div className="picker-calling-option-number">{option}</div>
+                    <div className="picker-calling-option-unit">minutes</div>
+                  </>
+                )}
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
