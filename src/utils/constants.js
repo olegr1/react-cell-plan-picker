@@ -9,11 +9,6 @@ const ACTIONS = {
   SELECT_CALLING_MINUTES: "selectCallingMinutes",
 };
 
-const STATUSES = {
-  LOADING: "loading",
-  READY: "ready",
-};
-
 const STATE_CHANGE_TRIGGERS = {
   MORE_LESS_BUTTONS: "moreLessButtons",
   CALLING_BUTTONS: "callingButtons",
@@ -22,4 +17,4 @@ const STATE_CHANGE_TRIGGERS = {
   OTHER: "other",
 };
 
-export { ACTIONS, STATUSES, STATE_CHANGE_TRIGGERS };
+export { ACTIONS, STATE_CHANGE_TRIGGERS };

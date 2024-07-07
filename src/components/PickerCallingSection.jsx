@@ -11,8 +11,6 @@ function PickerCallingSection({
 
   useEffect(() => {
     if (stateChangedBy === STATE_CHANGE_TRIGGERS.CALLING_BUTTONS) {
-      console.log("AAA", activeCallingOption.current);
-
       activeCallingOption.current.focus();
     }
   }, [currentPlan, stateChangedBy]);
@@ -33,8 +31,6 @@ function PickerCallingSection({
   }
 
   function getNearestPlanWithCallingOption(option) {
-    console.log(option);
-
     const currentPlanNumeric =
       currentPlan.callMinutes === ""
         ? Infinity
@@ -50,8 +46,6 @@ function PickerCallingSection({
     let plan = isLesserPlan
       ? matchingPlans[matchingPlans.length - 1]
       : matchingPlans[0];
-
-    console.log(isLesserPlan, plan);
 
     return plan.id;
   }

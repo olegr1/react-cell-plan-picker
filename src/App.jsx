@@ -1,14 +1,15 @@
+import { ACTIONS, STATE_CHANGE_TRIGGERS } from "./utils/constants";
+import plansObject from "./data/plans.json";
+
 import { useEffect, useReducer } from "react";
 import PlansPane from "./components/PlansPane";
 import PickerPane from "./components/PickerPane";
 import LoadingMessage from "./components/LoadingMessage";
 import Layout from "./components/Layout";
-import { ACTIONS, STATUSES, STATE_CHANGE_TRIGGERS } from "./utils/constants";
 
 const initialState = {
-  plans: [],
-  currentPlanId: "123123",
-  status: STATUSES.LOADING,
+  plans: sortPlansBy(plansObject.plans, "data"),
+  currentPlanId: plansObject.defaultPlan,
   isIncludedOfferData: true,
   isOrderModalOpen: false,
   stateChangedBy: STATE_CHANGE_TRIGGERS.OTHER,
@@ -16,17 +17,6 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case ACTIONS.DATA_REQUESTED:
-      return state;
-
-    case ACTIONS.DATA_RECEIVED:
-      return {
-        ...state,
-        plans: sortPlansBy(action.payload, "data"),
-        status: STATUSES.READY,
-        stateChangedBy: STATE_CHANGE_TRIGGERS.OTHER,
-      };
-
     case ACTIONS.TOGGLE_OFFER_DATA:
       return {
         ...state,
@@ -72,8 +62,6 @@ function reducer(state, action) {
       };
 
     case ACTIONS.SELECT_CALLING_MINUTES:
-      console.log(action.payload);
-
       return {
         ...state,
         stateChangedBy: STATE_CHANGE_TRIGGERS.CALLING_BUTTONS,
@@ -122,34 +110,12 @@ function App() {
     {
       plans,
       currentPlanId,
-      status,
       isIncludedOfferData,
       isOrderModalOpen,
       stateChangedBy,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = "http://localhost:8000/plans";
-
-      try {
-        dispatch({ type: ACTIONS.DATA_REQUESTED });
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`Response status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        dispatch({ type: ACTIONS.DATA_RECEIVED, payload: data });
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -168,21 +134,17 @@ function App() {
   return (
     <>
       <Layout>
-        {status === STATUSES.LOADING ? (
-          <LoadingMessage />
-        ) : (
-          <>
-            <PickerPane
-              plans={plans}
-              currentPlanId={currentPlanId}
-              isIncludedOfferData={isIncludedOfferData}
-              dispatch={dispatch}
-              isOrderModalOpen={isOrderModalOpen}
-              stateChangedBy={stateChangedBy}
-            />
-            <PlansPane plans={plans} currentPlanId={currentPlanId} />
-          </>
-        )}
+        <>
+          <PickerPane
+            plans={plans}
+            currentPlanId={currentPlanId}
+            isIncludedOfferData={isIncludedOfferData}
+            dispatch={dispatch}
+            isOrderModalOpen={isOrderModalOpen}
+            stateChangedBy={stateChangedBy}
+          />
+          <PlansPane plans={plans} currentPlanId={currentPlanId} />
+        </>
       </Layout>
     </>
   );

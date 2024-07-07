@@ -11,7 +11,6 @@ function Modal({ children, dispatch, isOrderModalOpen, title }) {
     document.body.classList.toggle("modal-open", isOrderModalOpen);
 
     if (isOrderModalOpen) {
-      console.log(closeBtnRef);
       closeBtnRef.current.focus();
     }
   }, [isOrderModalOpen]);
