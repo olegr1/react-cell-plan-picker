@@ -4,10 +4,90 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>React Cell Plan Picker Demo</title>
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <div id="root"></div>
+    <a href="#main" class="skip-to-main-link"> Skip to main content </a>
+    <header class="page-header">
+      <div class="container">
+        <div class="page-header-content">
+          <h1 class="page-title">React Cellphone Plan Picker Demo</h1>
+          <div class="page-header-links">
+            <a class="page-header-about-link" href="#about"> About </a>
+            <a
+              class="page-header-github-link"
+              href="https://github.com/olegr1/react-cell-plan-picker"
+            >
+              <svg focusable="false" tab-index="-1" aria-hidden="true">
+                <use
+                  focusable="false"
+                  tab-index="-1"
+                  xlink:href="#icon-github"
+                ></use>
+              </svg>
+              <span class="sr-only">See code on GitHub</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <div id="root"></div>
+      <div class="about-section" id="about">
+        <div class="container">
+          <div class="about-section-content">
+            <h2 class="pane-title">About this demo</h2>
+            <p>
+              This React demo is inspired by an actual cellphone plan widget I
+              implemented for a client using plain JavaScript.
+            </p>
+
+            <p>
+              The widget was designed to simplify choosing the right cellphone
+              plan based on a combination of features such as available data and
+              call minutes, as well as optional special offers.
+            </p>
+
+            <p>
+              Working on the original widget was a fun challenge so I decided to
+              re-create a slightly simplified version in React to practice
+              implementing state management, interactivity and accessibility.
+            </p>
+
+            <h3 class="picker-section-title">Some of it's features include:</h3>
+
+            <ul>
+              <li>Responsive mobile-first layout</li>
+              <li>Fully custom CSS</li>
+              <li>Screen reader friendly</li>
+              <li>Fully keyboard operable</li>
+              <li>JSON data source</li>
+              <li>React state management with useReducer</li>
+              <li>Custom modal popup using createPortal</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
     <script type="module" src="/src/main.jsx"></script>
     <div id="modalContainer" class="modal-container"></div>
+    <svg
+      tabindex="-1"
+      focusable="false"
+      aria-hidden="true"
+      style="position: absolute; width: 0; height: 0; overflow: hidden"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    >
+      <defs>
+        <symbol id="icon-github" viewBox="0 0 30 30">
+          <path
+            d="M15.01.49C6.84.49.24 7.14.24 15.37c0 6.58 4.23 12.14 10.1 14.11.73.15 1-.32 1-.71 0-.34-.02-1.53-.02-2.76-4.11.89-4.96-1.77-4.96-1.77-.66-1.72-1.64-2.17-1.64-2.17-1.34-.91.1-.91.1-.91 1.49.1 2.27 1.53 2.27 1.53 1.32 2.27 3.45 1.63 4.3 1.23.12-.96.51-1.63.93-2-3.28-.34-6.72-1.63-6.72-7.34 0-1.63.59-2.96 1.52-3.99-.15-.37-.66-1.9.15-3.94 0 0 1.25-.39 4.06 1.53a14.153 14.153 0 0 1 7.38 0c2.81-1.92 4.06-1.53 4.06-1.53.81 2.04.29 3.57.15 3.94.95 1.03 1.52 2.36 1.52 3.99 0 5.71-3.45 6.97-6.75 7.34.54.47 1 1.35 1 2.76 0 2-.02 3.6-.02 4.09 0 .39.27.86 1 .71 5.87-1.97 10.1-7.54 10.1-14.11C29.78 7.14 23.15.49 15.01.49z"
+            style="fill-rule: evenodd; clip-rule: evenodd"
+          ></path>
+        </symbol>
+      </defs>
+    </svg>
   </body>
 </html>

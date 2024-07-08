@@ -63,7 +63,7 @@ function PickerPane({
       </div>
 
       <Modal
-        title={"Your order"}
+        title={"Your plan"}
         dispatch={dispatch}
         isOrderModalOpen={isOrderModalOpen}
       >

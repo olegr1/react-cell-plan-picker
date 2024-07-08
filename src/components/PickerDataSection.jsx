@@ -120,7 +120,10 @@ function PickerDataSection({
       </div>
 
       <div className="picker-data-item active">
-        <span className="picker-data-item-desc">Data included in the plan</span>
+        <span className="picker-data-item-desc">
+          <span className="picker-data-pill-plan"></span>Data included in the
+          plan
+        </span>
         <span className="picker-data-item-gb">
           {convertMbToGbString(currentPlan.data)}
         </span>
@@ -135,7 +138,7 @@ function PickerDataSection({
         aria-hidden={hasSpecialOfferWithData ? null : true}
       >
         <span className="picker-data-item-desc">
-          Offer data
+          <span className="picker-data-pill-offer"></span>Special offer data
           {hasSpecialOfferWithData && (
             <button
               className="picker-offer-data-toggle"

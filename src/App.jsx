@@ -4,7 +4,6 @@ import plansObject from "./data/plans.json";
 import { useEffect, useReducer } from "react";
 import PlansPane from "./components/PlansPane";
 import PickerPane from "./components/PickerPane";
-import LoadingMessage from "./components/LoadingMessage";
 import Layout from "./components/Layout";
 
 const initialState = {
