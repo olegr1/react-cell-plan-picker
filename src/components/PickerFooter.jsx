@@ -20,7 +20,10 @@ function PickerFooter({
 
   return (
     <div className="picker-footer">
-      <div className="picker-footer-price">${currentPlan.price}/month</div>
+      <div className="picker-footer-price">
+        <span aria-hidden="true">${currentPlan.price}/month</span>
+        <span className="sr-only">{currentPlan.price} dollars per month</span>
+      </div>
       <button
         ref={orderCtaRef}
         className="picker-order-cta"

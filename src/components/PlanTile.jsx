@@ -22,10 +22,12 @@ function PlanTile({ plan, isCurrent }) {
             <span className="plan-feature-highlight">Unlimited data</span>
           ) : (
             <>
-              <span className="plan-feature-highlight">
-                {convertMbToGbString(plan.data)}
-              </span>{" "}
-              of data
+              <span className="plan-feature-highlight" aria-hidden="true">
+                {`${convertMbToGbString(plan.data)} of data`}
+              </span>
+              <span className="sr-only">
+                {`${convertMbToGbString(plan.data, true)} of data`}
+              </span>
             </>
           )}
         </li>
@@ -39,7 +41,10 @@ function PlanTile({ plan, isCurrent }) {
         </li>
       </ul>
 
-      <div className="plan-price">${plan.price}/month</div>
+      <div className="plan-price">
+        <span aria-hidden="true">${plan.price}/month</span>
+        <span className="sr-only">{`${plan.price} dollars per month`}</span>
+      </div>
 
       {plan.specialOffer !== "" ? (
         <div

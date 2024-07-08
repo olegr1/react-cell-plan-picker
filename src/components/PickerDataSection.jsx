@@ -78,7 +78,12 @@ function PickerDataSection({
       <div className="picker-data-bar-wrap">
         <div className="picker-data">
           <span className="picker-data-gb">
-            {convertMbToGbString(getPlanTotalData(currentPlan))}
+            <span aria-hidden="true">
+              {convertMbToGbString(getPlanTotalData(currentPlan))}
+            </span>
+            <span className="sr-only">
+              {convertMbToGbString(getPlanTotalData(currentPlan), true)}
+            </span>
           </span>
 
           {currentPlan.specialOffer.duration && isIncludedOfferData && (
@@ -125,7 +130,12 @@ function PickerDataSection({
           plan
         </span>
         <span className="picker-data-item-gb">
-          {convertMbToGbString(currentPlan.data)}
+          <span aria-hidden="true">
+            {convertMbToGbString(currentPlan.data)}
+          </span>
+          <span className="sr-only">
+            {convertMbToGbString(currentPlan.data, true)}
+          </span>
         </span>
       </div>
 
@@ -156,8 +166,16 @@ function PickerDataSection({
           )}
         </span>
         <span className="picker-data-item-gb">
-          {hasSpecialOfferWithData &&
-            convertMbToGbString(currentPlan.specialOffer.data)}
+          {hasSpecialOfferWithData && (
+            <>
+              <span aria-hidden="true">
+                {convertMbToGbString(currentPlan.specialOffer.data)}
+              </span>
+              <span className="sr-only">
+                {convertMbToGbString(currentPlan.specialOffer.data, true)}
+              </span>
+            </>
+          )}
         </span>
       </div>
     </div>
